@@ -1,17 +1,20 @@
 package com.pascaljeanty.flix.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.pascaljeanty.flix.DetailActivity;
 import com.pascaljeanty.flix.R;
 import com.pascaljeanty.flix.models.Movie;
 
@@ -51,12 +54,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
+        RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            container =  itemView.findViewById(R.id.container);
         }
 
         public void bind(Movie movie) {
@@ -73,6 +78,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             }
 
             Glide.with(context).load(imageUrl).into(ivPoster);
+
+            // 1. Register click listener on whole row
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 2. Navigate in a new activity on tap
+                    Intent i = new Intent(context, DetailActivity.class);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }
