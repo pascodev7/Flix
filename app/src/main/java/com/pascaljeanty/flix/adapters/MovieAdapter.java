@@ -18,6 +18,8 @@ import com.pascaljeanty.flix.DetailActivity;
 import com.pascaljeanty.flix.R;
 import com.pascaljeanty.flix.models.Movie;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
@@ -85,6 +87,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 public void onClick(View view) {
                     // 2. Navigate in a new activity on tap
                     Intent i = new Intent(context, DetailActivity.class);
+                    // using the (String name, Parcelable value) overload!
+                    i.putExtra("title", movie.getTitle());
+                    // wrapping objects with parcels.wrap()
+                    i.putExtra("movie", Parcels.wrap(movie));
                     context.startActivity(i);
                 }
             });
